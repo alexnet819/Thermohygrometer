@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
+set(PICO_SDK_FETCH_FROM_GIT on)
+
 # Pico SDKのパスを環境変数から取得
 if (NOT DEFINED ENV{PICO_SDK_PATH})
     message(FATAL_ERROR "PICO_SDK_PATH environment variable is not set")
@@ -20,15 +22,21 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 # Pico SDKのプラットフォームとコンパイラを指定
-# Pcio2を使用する場合にはRP2350を指定
-set(PICO_PLATFORM rp2040)
-set(PICO_COMPILER pico_arm_gcc)
+# raspberry pi pico / wはrp2040、raspberry pi pico2 / wはRP2350
+set(PICO_PLATFORM rp2350)
 
-# Pico W向けの設定（必要に応じてpico_wからpicoに変更可能）
-# Pico 2を使用する場合はpico2を指定
-# 見てもわからないことが多いですが、sdkのgithubのreadmeに書いてあるのでそれを参照するといいです
-# https://github.com/raspberrypi/pico-sdk
-set(PICO_BOARD pico_w) # pico_w から pico に変更 (または必要に応じて pico_w のまま)
+# コンパイラの指定
+# pico_arm_cortex_m0plus_gccはRP2040用(pico用)
+# pico_arm_cortex_m33_gccはRP2350用(pico2用)
+# set(PICO_COMPILER pico_arm_cortex_m0plus_gcc)
+set(PICO_COMPILER pico_arm_cortex_m33_gcc)
+
+# 以下が対応しているボード名一覧
+# raspberry pi pico = pico
+# raspberry pi pico w = pico_w
+# raspberry pi pico2 = pico2
+# raspberry pi pico2 w = pico2_w
+set(PICO_BOARD pico2_w)
 
 # Pico SDKを初期化する（project宣言の前に行う必要があります）
 include($ENV{PICO_SDK_PATH}/pico_sdk_init.cmake)
