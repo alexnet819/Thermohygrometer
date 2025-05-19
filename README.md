@@ -114,3 +114,12 @@ The program initializes a DHT sensor and an I2C LCD. It periodically reads tempe
     - Ensure the correct COM port is selected in the terminal program.
     - Check the USB cable and connection to the Pico.
     - Verify the serial settings (baud rate, data bits, parity, stop bit).
+
+## Example Usage in Practice
+<table>
+  <tr>
+    <td><img src="image/image000.jpeg" alt="Example Image 0" width="200"/></td>
+    <td><img src="image/image001.jpeg" alt="Example Image 1" width="200"/></td>
+    <td><img src="image/image002.jpeg" alt="Example Image 2" width="200"/></td>
+  </tr>
+</table>
