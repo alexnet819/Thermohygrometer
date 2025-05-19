@@ -55,6 +55,64 @@ The program initializes a DHT sensor and an I2C LCD. It periodically reads tempe
     ```
 6.  The firmware file `thermohygrometer.uf2` will be generated in the `build` directory.
 
+## Building and Running with Docker/nerdctl
+
+This project includes a `Dockerfile` to build the firmware in a containerized environment. This ensures a consistent build environment.
+
+### Prerequisites
+
+- Docker or nerdctl/buildkit installed.
+
+### Building the Docker Image
+
+Navigate to the root directory of this project (where the `Dockerfile` is located) and run:
+
+**For Docker:**
+```bash
+docker build -t thermohygrometer-builder .
+```
+
+**For nerdctl:**
+```bash
+nerdctl build -t thermohygrometer-builder .
+```
+This will create a Docker image named `thermohygrometer-builder` containing the Pico SDK and all necessary build tools.
+
+### Building the Firmware using the Docker Image
+
+Once the image is built, you can compile the thermohygrometer firmware. The build script inside the container expects the project source code to be mounted at `/thermohygrometer`. The `src` subdirectory (containing the main `CMakeLists.txt`) will be used by default.
+
+**For Docker:**
+From the root directory of this project:
+```bash
+docker run --rm -v "$(pwd):/thermohygrometer" thermohygrometer-builder build-pico-project.sh src
+```
+
+**For nerdctl:**
+From the root directory of this project:
+```bash
+nerdctl run --rm -v "$(pwd):/thermohygrometer" thermohygrometer-builder build-pico-project.sh src
+```
+
+- `$(pwd)` mounts the current host directory (your project root) to `/thermohygrometer` inside the container.
+- `build-pico-project.sh src` executes the build script, telling it that your project's main CMake source is in the `src` subdirectory relative to the mount point.
+- The compiled `.uf2` file will be placed in the `output` directory within your project root on the host machine (e.g., `./output/thermohygrometer.uf2`).
+
+### Cleaning Docker/nerdctl Build Cache (Optional)
+
+If you need to clear the build cache to save disk space or resolve caching issues:
+
+**For Docker:**
+```bash
+docker builder prune
+```
+
+**For nerdctl:**
+```bash
+nerdctl builder prune
+```
+This command removes all dangling build cache. Use with caution as it might slow down subsequent builds.
+
 ## Usage
 
 1.  **Hardware Setup:**
