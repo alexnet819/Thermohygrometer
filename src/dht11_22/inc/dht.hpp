@@ -5,13 +5,6 @@
 #include "pico/time.h"
 #include <stdio.h>
 
-// DHTデータピンのGPIO番号を指定 (例: GPIO15)
-// この定数はクラスのコンストラクタで渡されるピン番号で上書きされるため、
-// デフォルト値としての意味合いが強いか、あるいは削除しても良い。
-// ここでは残すが、実際のピンはコンストラクタで指定される。
-// const uint DEFAULT_DHT_PIN = 15;
-
-
 // 使用するセンサーのタイプを定義
 enum class SensorType { // enum class を推奨
     SENSOR_TYPE_DHT11 = 0,

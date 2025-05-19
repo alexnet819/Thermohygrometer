@@ -3,11 +3,6 @@
 #include "lcd1602.hpp" // LCDライブラリのヘッダー
 #include "dht.hpp"     // DHTライブラリのヘッダー
 
-// LCDのI2C設定 (環境に合わせて変更)
-// const uint I2C_SDA_PIN = PICO_DEFAULT_I2C_SDA_PIN; // GP4 - Lcd1602コンストラクタのデフォルト値を使用
-// const uint I2C_SCL_PIN = PICO_DEFAULT_I2C_SCL_PIN; // GP5 - Lcd1602コンストラクタのデフォルト値を使用
-// i2c_inst_t* I2C_INSTANCE_PTR = i2c0; // Lcd1602コンストラクタに直接 i2c0 を渡す
-
 // DHTセンサーの設定
 const uint DHT_DATA_PIN = 15; // DHTセンサーのデータピン (例: GP15)
 // dht11を使用する
@@ -31,9 +26,8 @@ int main(){
     printf("Initializing LCD...\n");
     if (!lcd.init(100 * 1000)) { // 100kHzでI2CバスとLCDを初期化
         printf("LCD initialization FAILED. Check wiring and I2C address.\n");
-        // LCD初期化失敗時も、何か表示を試みる（バックライトだけでも点けば手がかりになる）
-        lcd.backlight(true); // バックライト強制オン
-        lcd.print("Init Failed!"); // これが表示されるか？
+        lcd.backlight(true);
+        lcd.print("Init Failed!");
         while(1) {
             printf("Looping due to LCD init failure.\n");
             sleep_ms(1000);
@@ -42,7 +36,6 @@ int main(){
     
     printf("LCD Initialized SUCCEEDED.\n");
     lcd.print("LCD Initialized SUCCEEDED.");
-    lcd.backlight(true); // バックライトを確実にオン
     sleep_ms(1000); // 1秒待機
     lcd.clear();
     lcd.set_cursor(0,0);
@@ -98,5 +91,5 @@ int main(){
         }
     }
 
-    return 0; // ここには到達しない
+    return 0;
 }
