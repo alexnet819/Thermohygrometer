@@ -53,8 +53,8 @@ const int DEFAULT_I2C_ADDR = 0x27; // Used within the class
 #define LCD_COLS 16
 
 // Debug mode (outputs detailed logs)
-#define DEBUG_MODE 1
 
+    static constexpr bool DEBUG_MODE = true;
 
 class Lcd1602 {
 public:
